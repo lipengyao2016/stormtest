@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.bigdata</groupId>
+  <artifactId>stormtest</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <name>stormtest</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.example.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+      <storm.version>1.2.2</storm.version>
+      <hadoop.version>2.7.1</hadoop.version>
+  </properties>
+
+  <dependencies>
+
+
+      <dependency>
+          <groupId>redis.clients</groupId>
+          <artifactId>jedis</artifactId>
+          <version>2.9.0</version>
+      </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+
+      <dependency>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-lang3</artifactId>
+          <version>3.8.1</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.apache.storm</groupId>
+          <artifactId>storm-core</artifactId>
+          <version>${storm.version}</version>
+          <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+          <groupId>org.apache.storm</groupId>
+          <artifactId>storm-redis</artifactId>
+          <version>${storm.version}</version>
+      </dependency>
+
+
+      <!--Storm 整合 HDFS 依赖-->
+      <dependency>
+          <groupId>org.apache.storm</groupId>
+          <artifactId>storm-hdfs</artifactId>
+          <version>${storm.version}</version>
+          <exclusions>
+              <exclusion>
+                  <groupId>org.apache.hadoop</groupId>
+                  <artifactId>hadoop-client</artifactId>
+              </exclusion>
+              <exclusion>
+                  <groupId>org.apache.hadoop</groupId>
+                  <artifactId>hadoop-hdfs</artifactId>
+              </exclusion>
+          </exclusions>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-common</artifactId>
+          <version>${hadoop.version}</version>
+          <exclusions>
+              <exclusion>
+                  <groupId>org.slf4j</groupId>
+                  <artifactId>slf4j-log4j12</artifactId>
+              </exclusion>
+          </exclusions>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-client</artifactId>
+          <version>${hadoop.version}</version>
+          <exclusions>
+              <exclusion>
+                  <groupId>org.slf4j</groupId>
+                  <artifactId>slf4j-log4j12</artifactId>
+              </exclusion>
+          </exclusions>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-hdfs</artifactId>
+          <version>${hadoop.version}</version>
+          <exclusions>
+              <exclusion>
+                  <groupId>org.slf4j</groupId>
+                  <artifactId>slf4j-log4j12</artifactId>
+              </exclusion>
+          </exclusions>
+      </dependency>
+
+  </dependencies>
+
+  <build>
+
+      <resources>
+          <resource>
+              <directory>src/main/resources</directory>
+              <includes>
+                  <include>**/*.properties</include>
+                  <include>**/*.xml</include>
+              </includes>
+              <targetPath>${project.build.directory}/classes</targetPath>
+          </resource>
+      </resources>
+
+    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+      <plugins>
+
+          <!--<plugin>-->
+          <!--<groupId>org.apache.maven.plugins</groupId>-->
+          <!--<artifactId>maven-jar-plugin</artifactId>-->
+          <!--<version>2.3.1</version>-->
+          <!--<configuration>-->
+              <!--<archive>-->
+                  <!--<manifest>-->
+                      <!--&lt;!&ndash;运行jar包时运行的主类，要求类全名&ndash;&gt;-->
+                      <!--<mainClass>com.bigdata.App</mainClass>-->
+                      <!--&lt;!&ndash;是否把第三方jar放到manifest的classpath中&ndash;&gt;-->
+                      <!--<addClasspath>true</addClasspath>-->
+                      <!--&lt;!&ndash;生成的manifest中classpath的前缀，因为要把第三方jar放到lib目录下，所以classpath的前缀是lib/&ndash;&gt;-->
+                      <!--<classpathPrefix>lib/</classpathPrefix>-->
+                  <!--</manifest>-->
+              <!--</archive>-->
+          <!--</configuration>-->
+          <!--</plugin>-->
+
+
+
+          <!--<plugin>-->
+              <!--<groupId>org.apache.maven.plugins</groupId>-->
+              <!--<artifactId>maven-assembly-plugin</artifactId>-->
+              <!--&lt;!&ndash;<version>2.5.5</version>&ndash;&gt;-->
+              <!--<executions>-->
+                  <!--<execution>-->
+                      <!--<id>make-assembly</id>-->
+                      <!--&lt;!&ndash; 绑定到package生命周期 &ndash;&gt;-->
+                      <!--<phase>package</phase>-->
+                      <!--<goals>-->
+                          <!--&lt;!&ndash; 只运行一次 &ndash;&gt;-->
+                          <!--<goal>single</goal>-->
+                      <!--</goals>-->
+                  <!--</execution>-->
+              <!--</executions>-->
+              <!--<configuration>-->
+                  <!--&lt;!&ndash; 配置描述符文件 &ndash;&gt;-->
+                  <!--<descriptor>src/main/resources/assembly.xml</descriptor>-->
+                  <!--&lt;!&ndash; 也可以使用Maven预配置的描述符&ndash;&gt;-->
+                  <!--&lt;!&ndash;<descriptorRefs>&ndash;&gt;-->
+                      <!--&lt;!&ndash;<descriptorRef>jar-with-dependencies</descriptorRef>&ndash;&gt;-->
+                  <!--&lt;!&ndash;</descriptorRefs>&ndash;&gt;-->
+                  <!--<archive>-->
+                      <!--<manifest>-->
+                          <!--&lt;!&ndash;<mainClass>com.bigdata.App</mainClass>&ndash;&gt;-->
+                          <!--<mainClass>com.bigdata.wordcnt.LocalWordCntApp</mainClass>-->
+                          <!--&lt;!&ndash;是否把第三方jar放到manifest的classpath中&ndash;&gt;-->
+                          <!--&lt;!&ndash;<addClasspath>true</addClasspath>&ndash;&gt;-->
+                          <!--&lt;!&ndash;生成的manifest中classpath的前缀，因为要把第三方jar放到lib目录下，所以classpath的前缀是lib/&ndash;&gt;-->
+                          <!--&lt;!&ndash;<classpathPrefix>/</classpathPrefix>&ndash;&gt;-->
+                      <!--</manifest>-->
+                  <!--</archive>-->
+              <!--</configuration>-->
+          <!--</plugin>-->
+
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-jar-plugin</artifactId>
+              <version>2.6</version>
+              <configuration>
+                  <archive>
+                      <manifest>
+                          <!--<addClasspath>true</addClasspath>-->
+                          <!--<classpathPrefix>dependency/</classpathPrefix>-->
+                          <mainClass>com.bigdata.wordcnt.HdfsWordCntApp</mainClass>
+                      </manifest>
+                  </archive>
+              </configuration>
+          </plugin>
+
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-shade-plugin</artifactId>
+              <version>1.4</version>
+              <configuration>
+                  <createDependencyReducedPom>true</createDependencyReducedPom>
+              </configuration>
+              <executions>
+                  <execution>
+                      <phase>package</phase>
+                      <goals>
+                          <goal>shade</goal>
+                      </goals>
+                      <configuration>
+
+                          <!--<filters>-->
+                              <!--<filter>-->
+                                  <!--<artifact>org.apache.storm:storm-core</artifact>-->
+                              <!--</filter>-->
+                          <!--</filters>-->
+
+                          <transformers>
+                              <transformer
+                                      implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                              <transformer
+                                      implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                              </transformer>
+                              <!--<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">-->
+                                  <!--<resource>META-INF/spring.handlers</resource>-->
+                              <!--</transformer>-->
+                              <!--<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">-->
+                                  <!--<resource>META-INF/spring.schemas</resource>-->
+                              <!--</transformer>-->
+
+                              <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                  <resource>META-INF.services/org.apache.hadoop.fs.FileSystem</resource>
+                              </transformer>
+
+                          </transformers>
+                      </configuration>
+                  </execution>
+              </executions>
+          </plugin>
+
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>
