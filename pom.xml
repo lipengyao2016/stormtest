@@ -18,6 +18,7 @@
     <maven.compiler.target>1.8</maven.compiler.target>
       <storm.version>1.2.2</storm.version>
       <hadoop.version>2.7.1</hadoop.version>
+      <kafka.version>2.2.0</kafka.version>
   </properties>
 
   <dependencies>
@@ -46,13 +47,19 @@
           <groupId>org.apache.storm</groupId>
           <artifactId>storm-core</artifactId>
           <version>${storm.version}</version>
-          <scope>provided</scope>
+          <!--<scope>provided</scope>-->
       </dependency>
 
       <dependency>
           <groupId>org.apache.storm</groupId>
           <artifactId>storm-redis</artifactId>
           <version>${storm.version}</version>
+          <exclusions>
+              <exclusion>
+                      <groupId>com.google.guava</groupId>
+                      <artifactId>guava</artifactId>
+              </exclusion>
+          </exclusions>
       </dependency>
 
 
@@ -104,6 +111,23 @@
                   <artifactId>slf4j-log4j12</artifactId>
               </exclusion>
           </exclusions>
+      </dependency>
+
+      <dependency>
+          <groupId>org.apache.storm</groupId>
+          <artifactId>storm-hbase</artifactId>
+          <version>${storm.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.apache.storm</groupId>
+          <artifactId>storm-kafka-client</artifactId>
+          <version>${storm.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.kafka</groupId>
+          <artifactId>kafka-clients</artifactId>
+          <version>${kafka.version}</version>
       </dependency>
 
   </dependencies>
@@ -188,7 +212,8 @@
                       <manifest>
                           <!--<addClasspath>true</addClasspath>-->
                           <!--<classpathPrefix>dependency/</classpathPrefix>-->
-                          <mainClass>com.bigdata.wordcnt.HdfsWordCntApp</mainClass>
+                          <!--<mainClass>com.bigdata.wordcnt.HdfsWordCntApp</mainClass>-->
+                          <mainClass>com.bigdata.wordcnt.HbaseWordCntApp</mainClass>
                       </manifest>
                   </archive>
               </configuration>

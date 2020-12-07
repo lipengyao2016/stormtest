@@ -30,14 +30,14 @@ public class CountBold extends BaseRichBolt {
         }
         countVal++;
         countMap.put(word,countVal);
-//        System.out.println(" \n\n******execute begin****" );
-//
-//        for (String key:countMap.keySet()) {
-//            System.out.println(" word:" + key + " count:" + countMap.get(key));
-//        }
-//        System.out.println(" ******execute end****\n\n" );
+        System.out.println(" \n\n******execute begin****" );
 
-        outputCollector.emit(new Values(word,String.valueOf(/*countVal*/ 1)));
+        for (String key:countMap.keySet()) {
+            System.out.println(" word:" + key + " count:" + countMap.get(key));
+        }
+        System.out.println(" ******execute end****\n\n" );
+
+        outputCollector.emit(new Values(word,String.valueOf(countVal /*1*/)));
     }
 
     @Override

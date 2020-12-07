@@ -38,7 +38,8 @@ public class DataSourceSpout extends BaseRichSpout{
 
     @Override
     public void declareOutputFields(OutputFieldsDeclarer outputFieldsDeclarer) {
-         outputFieldsDeclarer.declare(new Fields("line"));
+//         outputFieldsDeclarer.declare(new Fields("line"));
+           outputFieldsDeclarer.declare(new Fields("message"));
     }
 
     protected String generateWordLine()
