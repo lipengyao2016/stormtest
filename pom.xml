@@ -203,6 +203,71 @@
               <!--</configuration>-->
           <!--</plugin>-->
 
+          <!--<plugin>-->
+              <!--<groupId>org.apache.maven.plugins</groupId>-->
+              <!--<artifactId>maven-jar-plugin</artifactId>-->
+              <!--<version>2.6</version>-->
+              <!--<configuration>-->
+                  <!--<archive>-->
+                      <!--<manifest>-->
+                          <!--&lt;!&ndash;<addClasspath>true</addClasspath>&ndash;&gt;-->
+                          <!--&lt;!&ndash;<classpathPrefix>dependency/</classpathPrefix>&ndash;&gt;-->
+                          <!--&lt;!&ndash;<mainClass>com.bigdata.wordcnt.HdfsWordCntApp</mainClass>&ndash;&gt;-->
+                          <!--<mainClass>com.bigdata.wordcnt.HbaseWordCntApp</mainClass>-->
+                      <!--</manifest>-->
+                  <!--</archive>-->
+              <!--</configuration>-->
+          <!--</plugin>-->
+
+          <!--<plugin>-->
+              <!--<groupId>org.apache.maven.plugins</groupId>-->
+              <!--<artifactId>maven-shade-plugin</artifactId>-->
+              <!--<version>1.4</version>-->
+              <!--<configuration>-->
+                  <!--<createDependencyReducedPom>true</createDependencyReducedPom>-->
+              <!--</configuration>-->
+              <!--<executions>-->
+                  <!--<execution>-->
+                      <!--<phase>package</phase>-->
+                      <!--<goals>-->
+                          <!--<goal>shade</goal>-->
+                      <!--</goals>-->
+                      <!--<configuration>-->
+
+                          <!--&lt;!&ndash;<filters>&ndash;&gt;-->
+                              <!--&lt;!&ndash;<filter>&ndash;&gt;-->
+                                  <!--&lt;!&ndash;<artifact>org.apache.storm:storm-core</artifact>&ndash;&gt;-->
+                              <!--&lt;!&ndash;</filter>&ndash;&gt;-->
+                          <!--&lt;!&ndash;</filters>&ndash;&gt;-->
+
+                          <!--<transformers>-->
+                              <!--<transformer-->
+                                      <!--implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>-->
+                              <!--<transformer-->
+                                      <!--implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">-->
+                              <!--</transformer>-->
+                              <!--&lt;!&ndash;<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">&ndash;&gt;-->
+                                  <!--&lt;!&ndash;<resource>META-INF/spring.handlers</resource>&ndash;&gt;-->
+                              <!--&lt;!&ndash;</transformer>&ndash;&gt;-->
+                              <!--&lt;!&ndash;<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">&ndash;&gt;-->
+                                  <!--&lt;!&ndash;<resource>META-INF/spring.schemas</resource>&ndash;&gt;-->
+                              <!--&lt;!&ndash;</transformer>&ndash;&gt;-->
+
+                              <!--<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">-->
+                                  <!--<resource>META-INF.services/org.apache.hadoop.fs.FileSystem</resource>-->
+                              <!--</transformer>-->
+
+                          <!--</transformers>-->
+                      <!--</configuration>-->
+                  <!--</execution>-->
+              <!--</executions>-->
+          <!--</plugin>-->
+
+      </plugins>
+    </pluginManagement>
+
+      <plugins>
+
           <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-jar-plugin</artifactId>
@@ -213,7 +278,8 @@
                           <!--<addClasspath>true</addClasspath>-->
                           <!--<classpathPrefix>dependency/</classpathPrefix>-->
                           <!--<mainClass>com.bigdata.wordcnt.HdfsWordCntApp</mainClass>-->
-                          <mainClass>com.bigdata.wordcnt.HbaseWordCntApp</mainClass>
+                          <!--<mainClass>com.bigdata.wordcnt.HbaseWordCntApp</mainClass>-->
+                          <mainClass>com.bigdata.wordcnt.WriteKafkaWordCntApp</mainClass>
                       </manifest>
                   </archive>
               </configuration>
@@ -235,9 +301,9 @@
                       <configuration>
 
                           <!--<filters>-->
-                              <!--<filter>-->
-                                  <!--<artifact>org.apache.storm:storm-core</artifact>-->
-                              <!--</filter>-->
+                          <!--<filter>-->
+                          <!--<artifact>org.apache.storm:storm-core</artifact>-->
+                          <!--</filter>-->
                           <!--</filters>-->
 
                           <transformers>
@@ -247,10 +313,10 @@
                                       implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                               </transformer>
                               <!--<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">-->
-                                  <!--<resource>META-INF/spring.handlers</resource>-->
+                              <!--<resource>META-INF/spring.handlers</resource>-->
                               <!--</transformer>-->
                               <!--<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">-->
-                                  <!--<resource>META-INF/spring.schemas</resource>-->
+                              <!--<resource>META-INF/spring.schemas</resource>-->
                               <!--</transformer>-->
 
                               <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
@@ -262,8 +328,6 @@
                   </execution>
               </executions>
           </plugin>
-
       </plugins>
-    </pluginManagement>
   </build>
 </project>
